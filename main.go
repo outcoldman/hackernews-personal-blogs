@@ -11,6 +11,7 @@ import (
 	"os"
 	"regexp"
 	"sort"
+	"strings"
 )
 
 type userComment struct {
@@ -136,6 +137,8 @@ func findAtomFeed(url string) (string, error) {
 				feedUrl := matches[1]
 				if feedUrl[0] == '/' {
 					feedUrl = url + feedUrl
+				} else if !strings.HasPrefix(feedUrl, "http") {
+					feedUrl = url + "/" + feedUrl
 				}
 				return feedUrl, nil
 			}
