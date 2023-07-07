@@ -156,10 +156,10 @@ func findAtomFeed(blogUrlStr string) (string, error) {
 	matches := re.FindAllString(content, -1)
 	for _, match := range matches {
 		if regexp.MustCompile(`type="?application/((rss)|(atom))(\+|&#43;)xml"?`).MatchString(match) {
-			re = regexp.MustCompile(`href="?([^"\s]+)"?`)
+			re = regexp.MustCompile(`href=("|')?([^'"\s>]+)("|')?`)
 			matches = re.FindStringSubmatch(match)
 			if len(matches) > 1 {
-				feedUrl, err := url.Parse(matches[1])
+				feedUrl, err := url.Parse(matches[2])
 				if err != nil {
 					return "", err
 				}
