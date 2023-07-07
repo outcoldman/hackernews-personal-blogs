@@ -38,7 +38,7 @@ comments:
 
 		karma := getUserKarma(username)
 
-		if karma <= 100 {
+		if karma <= 1 {
 			fmt.Println("Ignoring: ", username, "(", karma, ")")
 			continue
 		}
@@ -86,6 +86,11 @@ func createOPML(list []userComment) {
 			continue
 		}
 
+		if res, err := http.Get(feed); err != nil || res.StatusCode != http.StatusOK {
+			fmt.Println("Not a valid feed: ", feed, "by", comment.By, "(", comment.Karma, ")", err)
+			continue
+		}
+
 		feedEscaped := bytes.Buffer{}
 		err = xml.EscapeText(&feedEscaped, []byte(feed))
 		if err != nil {
@@ -122,10 +127,15 @@ func extractBlogURL(text string) (string, error) {
 		return matches[1], nil
 	}
 
-	re = regexp.MustCompile(`(https?://)(www\.)[^ ]+`)
+	re = regexp.MustCompile(`(https?://)?(www\.)?[^ <>]+`)
 	matches = re.FindStringSubmatch(text)
-	if len(matches) >= 2 {
-		return matches[1], nil
+	if len(matches) != 0 {
+		if u, err := url.Parse(matches[0]); err == nil {
+			if u.Scheme == "" {
+				u.Scheme = "https"
+			}
+			return u.String(), nil
+		}
 	}
 
 	return "", fmt.Errorf("no blog url found in %s", text)
@@ -145,7 +155,7 @@ func findAtomFeed(blogUrlStr string) (string, error) {
 	re := regexp.MustCompile(`<link\s+[^>]*rel="?alternate"?[^>]+>`)
 	matches := re.FindAllString(content, -1)
 	for _, match := range matches {
-		if regexp.MustCompile(`type="?application/((rss)|(atom))\+xml"?`).MatchString(match) {
+		if regexp.MustCompile(`type="?application/((rss)|(atom))(\+|&#43;)xml"?`).MatchString(match) {
 			re = regexp.MustCompile(`href="?([^"\s]+)"?`)
 			matches = re.FindStringSubmatch(match)
 			if len(matches) > 1 {
@@ -157,6 +167,26 @@ func findAtomFeed(blogUrlStr string) (string, error) {
 			}
 		}
 	}
+
+	// last resort, check a few most common feed urls
+	commonPaths := []string{"atom.xml", "index.xml", "feed.xml", "feed.atom", "feed", "blog.atom", "blog.xml", "rss.xml", "rss", "blog.rss", "blog.rss.xml", "index.rss", "index.rss.xml"}
+	for _, path := range commonPaths {
+		feedUrl, err := url.Parse(path)
+		if err != nil {
+			return "", err
+		}
+		feedUrl = blogUrl.ResolveReference(feedUrl)
+		res, err := http.Get(feedUrl.String())
+		if err != nil {
+			continue
+		}
+
+		_ = res.Body.Close()
+		if res.StatusCode == 200 {
+			return feedUrl.String(), nil
+		}
+	}
+
 	return "", fmt.Errorf("no feed found for %s", blogUrlStr)
 }
 
