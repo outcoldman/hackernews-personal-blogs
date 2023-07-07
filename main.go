@@ -127,11 +127,11 @@ func findAtomFeed(url string) (string, error) {
 		return "", fmt.Errorf("no content for %s", url)
 	}
 
-	re := regexp.MustCompile(`<link\s+[^>]*rel="alternate"[^>]+>`)
+	re := regexp.MustCompile(`<link\s+[^>]*rel="?alternate"?[^>]+>`)
 	matches := re.FindAllString(content, -1)
 	for _, match := range matches {
-		if regexp.MustCompile(`type="application/((rss)|(atom))\+xml"`).MatchString(match) {
-			re = regexp.MustCompile(`href="([^"]+)"`)
+		if regexp.MustCompile(`type="?application/((rss)|(atom))\+xml"?`).MatchString(match) {
+			re = regexp.MustCompile(`href="?([^"\s]+)"?`)
 			matches = re.FindStringSubmatch(match)
 			if len(matches) > 1 {
 				feedUrl := matches[1]

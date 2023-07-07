@@ -22,7 +22,7 @@ from comments.
 Not all blogs have RSS feeds, or the RSS feeds aren't included in the `<link rel="alternate" type="application/rss+xml" href="...">`
 or `<link rel="alternate" type="application/atom+xml" href="...">` tag, so I might have missed some blogs.
 
-Anyway, we got more than 500 blogs, so I think it is a good start.
+Anyway, we got more than 600 blogs, so I think it is a good start.
 
 You can find the output of the latest run at [console.log](console.log).
 
@@ -31,10 +31,17 @@ You can find the output of the latest run at [console.log](console.log).
 As easy as running:
 
 ```bash
-go run main.go
+go run ./main.go | tee > console.log
 ```
 
 It is going to take a while, as it needs to fetch the karma for each user, and then fetch the RSS feed for each blog.
+
+## Author
+
+[outcoldman](https://www.outcoldman.com)
+
+- [Twitter](https://twitter.com/outcoldman)
+- [GitHub](https://github.com/outcoldman)
 
 ## LICENSE
 
