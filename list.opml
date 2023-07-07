@@ -666,6 +666,7 @@
 	<outline type="rss" title="thomascountz" text="thomascountz" xmlUrl="https://thomascountz.com/atom.xml" htmlUrl="https://thomascountz.com/atom.xml"/>
 	<outline type="rss" title="aareet" text="aareet" xmlUrl="https://www.aareet.com/poetry//Aareet" htmlUrl="https://www.aareet.com/poetry//Aareet"/>
 	<outline type="rss" title="abc3" text="abc3" xmlUrl="https://newsletter.disappearingmoment.com/archive/rss.xml" htmlUrl="https://newsletter.disappearingmoment.com/archive/rss.xml"/>
+	<outline type="rss" title="omershapira" text="omershapira" xmlUrl="https://omershapira.com/feed/" htmlUrl="https://omershapira.com/feed/"/>
 </outline>
 </body>
 </opml>
