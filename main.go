@@ -74,7 +74,7 @@ func createOPML(list []userComment) {
 		}
 
 		_, err = io.WriteString(output, fmt.Sprintf(`
-	<outline type="rss" title="%s" text="%s" type="rss" xmlUrl="%s" htmlUrl="%s"/>`,
+	<outline type="rss" title="%s" text="%s" xmlUrl="%s" htmlUrl="%s"/>`,
 			comment.By, comment.By, feed, feed))
 		if err != nil {
 			panic(err)
