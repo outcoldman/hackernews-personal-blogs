@@ -1,7 +1,9 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
+	"encoding/xml"
 	"fmt"
 	"html"
 	"io"
@@ -73,9 +75,20 @@ func createOPML(list []userComment) {
 			continue
 		}
 
+		feedEscaped := bytes.Buffer{}
+		err = xml.EscapeText(&feedEscaped, []byte(feed))
+		if err != nil {
+			panic(err)
+		}
+
+		byEscaped := bytes.Buffer{}
+		err = xml.EscapeText(&byEscaped, []byte(comment.By))
+		if err != nil {
+			panic(err)
+		}
 		_, err = io.WriteString(output, fmt.Sprintf(`
-	<outline type="rss" title="%s" text="%s" type="rss" xmlUrl="%s" htmlUrl="%s"/>`,
-			comment.By, comment.By, feed, feed))
+	<outline type="rss" title="%s" text="%s" xmlUrl="%s" htmlUrl="%s"/>`,
+			byEscaped.String(), byEscaped.String(), feedEscaped.String(), feedEscaped.String()))
 		if err != nil {
 			panic(err)
 		}
