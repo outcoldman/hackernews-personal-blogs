@@ -7,7 +7,7 @@ thread on Hacker News, prepared as OPML for easy import into your favorite RSS r
 
 ## Usage
 
-Download [list.opml](list.opml) and import it into your favorite RSS reader.
+Download [list.opml](https://raw.githubusercontent.com/outcoldman/hackernews-personal-blogs/master/list.opml) and import it into your favorite RSS reader.
 
 When building this list, I have ignored any user with less or equal to 100 karma, which means I might have missed some
 interesting blogs, but at the same time I wanted to ignore spam or throwaway accounts.
@@ -35,6 +35,23 @@ go run ./main.go | tee > console.log
 ```
 
 It is going to take a while, as it needs to fetch the karma for each user, and then fetch the RSS feed for each blog.
+
+## Contributing
+
+Please do not add blogs directly to the list.opml file, as it is going to be overwritten.
+Instead, you can go to the original [HN thread](https://news.ycombinator.com/item?id=36575081) and add a comment with a link to the blog you want to add.
+
+### Don't see your blog in the list?
+
+1. Make sure your comment does show a valid URL link to your blog. A lot of times people will type `example.com` or `HTtp://example.com` and it won't be recognized as a link.
+2. Make sure your blog has an RSS feed. And your website has an alternate link to the RSS feed in the `<head>` section of the HTML. For example:
+
+```html
+<link rel="alternate" type="application/rss+xml" title="XXX" href="https://example.com/rss.xml">
+```
+
+3. Only users with more than 100 karma are included.
+
 
 ## Author
 

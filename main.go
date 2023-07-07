@@ -8,10 +8,10 @@ import (
 	"html"
 	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"regexp"
 	"sort"
-	"strings"
 )
 
 type userComment struct {
@@ -24,8 +24,18 @@ func main() {
 	var list []userComment
 
 	comments := getPostComments()
+
+comments:
 	for _, id := range comments {
 		username, text := getComment(id)
+
+		// Ignore duplicates
+		for _, c := range list {
+			if c.By == username {
+				continue comments
+			}
+		}
+
 		karma := getUserKarma(username)
 
 		if karma <= 100 {
@@ -121,10 +131,15 @@ func extractBlogURL(text string) (string, error) {
 	return "", fmt.Errorf("no blog url found in %s", text)
 }
 
-func findAtomFeed(url string) (string, error) {
-	content := getBlogContent(url, 3)
+func findAtomFeed(blogUrlStr string) (string, error) {
+	blogUrl, err := url.Parse(blogUrlStr)
+	if err != nil {
+		return "", err
+	}
+
+	content := getBlogContent(blogUrlStr, 3)
 	if content == "" {
-		return "", fmt.Errorf("no content for %s", url)
+		return "", fmt.Errorf("no content for %s", blogUrlStr)
 	}
 
 	re := regexp.MustCompile(`<link\s+[^>]*rel="?alternate"?[^>]+>`)
@@ -134,17 +149,15 @@ func findAtomFeed(url string) (string, error) {
 			re = regexp.MustCompile(`href="?([^"\s]+)"?`)
 			matches = re.FindStringSubmatch(match)
 			if len(matches) > 1 {
-				feedUrl := matches[1]
-				if feedUrl[0] == '/' {
-					feedUrl = url + feedUrl
-				} else if !strings.HasPrefix(feedUrl, "http") {
-					feedUrl = url + "/" + feedUrl
+				feedUrl, err := url.Parse(matches[1])
+				if err != nil {
+					return "", err
 				}
-				return feedUrl, nil
+				return blogUrl.ResolveReference(feedUrl).String(), nil
 			}
 		}
 	}
-	return "", fmt.Errorf("no feed found for %s", url)
+	return "", fmt.Errorf("no feed found for %s", blogUrlStr)
 }
 
 func getBlogContent(url string, retries int) string {
