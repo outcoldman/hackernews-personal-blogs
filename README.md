@@ -49,7 +49,7 @@ It is going to take a while, as it needs to fetch the karma for each user, and t
 Please do not add blogs directly to the list.opml file, as it is going to be overwritten.
 Instead, you can go to the original [HN thread](https://news.ycombinator.com/item?id=36575081) and add a comment with a link to the blog you want to add.
 
-As an alternative you can add your blog to [listx.opml][listx.opml] file.
+As an alternative you can add your blog manually to [listx.opml](listx.opml) file.
 
 ### Don't see your blog in the list?
 
