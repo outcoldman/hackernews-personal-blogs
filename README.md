@@ -9,6 +9,8 @@ thread on Hacker News, prepared as OPML for easy import into your favorite RSS r
 
 Download [list.opml](https://raw.githubusercontent.com/outcoldman/hackernews-personal-blogs/master/list.opml) and import it into your favorite RSS reader.
 
+There is an alternative list as well, blogs that were added after submission to the HN post - [listx.opml](https://raw.githubusercontent.com/outcoldman/hackernews-personal-blogs/master/listx.opml).
+
 When building this list, I have ignored any user with less or equal to 1 karma, which means I might have missed some
 interesting blogs, but at the same time I wanted to ignore spam or throwaway accounts.
 
@@ -46,6 +48,8 @@ It is going to take a while, as it needs to fetch the karma for each user, and t
 
 Please do not add blogs directly to the list.opml file, as it is going to be overwritten.
 Instead, you can go to the original [HN thread](https://news.ycombinator.com/item?id=36575081) and add a comment with a link to the blog you want to add.
+
+As an alternative you can add your blog to [listx.opml][listx.opml] file.
 
 ### Don't see your blog in the list?
 
