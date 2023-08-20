@@ -1234,6 +1234,7 @@
 	<outline type="rss" title="adderthorn" text="adderthorn" xmlUrl="https://www.noahw.org/Blog/Feed" htmlUrl="https://www.noahw.org/Blog/Feed"/>
 	<outline type="rss" title="jmcb" text="jmcb" xmlUrl="https://kerunaru.substack.com/feed" htmlUrl="https://kerunaru.substack.com/feed"/>
 	<outline type="rss" title="parakalan" text="parakalan" xmlUrl="https://sudhar.xyz/feed.xml" htmlUrl="https://sudhar.xyz/feed.xml"/>
+	<outline type="rss" title="msephton" text="msephton" xmlUrl="https://blog.gingerbeardman.com/feed.xml" htmlUrl="https://blog.gingerbeardman.com/feed.xml"/>
 </outline>
 </body>
 </opml>
