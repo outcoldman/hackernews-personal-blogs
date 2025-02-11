@@ -9,6 +9,7 @@
     <outline type="rss" title="andrewnolandev" text="andrewnolandev" xmlUrl="https://andrewnolan.dev/rss.xml" htmlUrl="https://andrewnolan.dev/rss.xml"/>
     <outline type="rss" title="jitbit" text="jitbit" xmlUrl="https://www.jitbit.com/alexblog/rss/" htmlUrl="https://www.jitbit.com/alexblog/rss/"/>
     <outline type="rss" title="msephton" text="msephton" xmlUrl="https://blog.gingerbeardman.com/feed.xml" htmlUrl="https://blog.gingerbeardman.com/feed.xml"/>
+    <outline type="rss" title="shellab" text="shellab" xmlUrl="https://blog.andrewshell.org/rss.xml" htmlUrl="https://blog.andrewshell.org/"/>
 </outline>
 </body>
 </opml>
